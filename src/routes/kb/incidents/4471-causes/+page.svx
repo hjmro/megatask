@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 · two date failures'
 owner: hjmro
-status: proposed
+status: documented
 reviewed: 2026-10-29
 signature: hjmro
 ---
@@ -17,28 +17,42 @@ Ticket #4471 merged **412 unique reports**, but its reports describe two indepen
 failures. Grouping uses the tenant's locale and booking form rather than the intake tag.
 
 <Callout>
-The existing parser ticket covers the larger group. The booking-v3 hint needs its own ticket.
+These are two distinct failures, recorded separately in
+[parser issue #1](https://github.com/hjmro/megatask/issues/1) and
+[hint issue #2](https://github.com/hjmro/megatask/issues/2).
 </Callout>
 
 ## Problems found
 
 ### Parser reads day-first dates as month-first
 
-The shared parser reads every date month first. In a day-first tenant, a date such as 4/7 is
+The shared parser read every date month first. In a day-first tenant, a date such as 4/7 was
 interpreted as 7 April instead of 4 July. This group contains **379 reports**.
 
 ### booking-v3 gives day-first tenants a month-first hint
 
-booking-v3 prints `MM/DD/YYYY`. Its users type dates in that order, while the tenant expects
-day-first input. This is a separate form-hint failure affecting **33 reports**.
+booking-v3 printed `MM/DD/YYYY`. Its users typed dates in that order, while the tenant expected
+day-first input. This was a separate form-hint failure affecting **33 reports**.
 
 ## Evidence from #4471
+
+The following view reflects the export dated 4 October 2026. Its ticket-placement warning
+describes the desk's original merge, before the separate GitHub issues above were filed.
+The intake tags are guesses; the grouping uses tenant locale and booking form.
 
 <CauseTable ticket={4471} />
 
 ## Resolution
 
-Work on #4471 is complete. The two follow-up tickets close with this documented split, so the
-desk retains the evidence for both failures without keeping duplicate work open.
+The [course engineering update](https://hq.mega.dev/challenges/what-it-shows#engineering-update)
+reports that #4471 closed on **5 October 2026**, with a different outcome for each problem:
+
+- **Parser — fixed:** `fix(dates): parse dd/mm for eu locales`.
+  [Issue #1](https://github.com/hjmro/megatask/issues/1) is closed as completed.
+- **Hint — won't fix:** booking-v3 was retired.
+  [Issue #2](https://github.com/hjmro/megatask/issues/2) is closed as not planned.
+
+The issues preserve the two distinct causes and their report counts. The engineering update,
+rather than the act of splitting the reports, supplies the reason for each closure.
 
 <RenderStamp {signature} />
