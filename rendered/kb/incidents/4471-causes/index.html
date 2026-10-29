@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>#4471 · two date failures · support kb</title>
+    <style>
+      :root { --bg:#fbfaf7; --fg:#1d1d1b; --muted:#6b6a66; --line:#e3e0d8; --accent:#2f6f5e; --note:#eef5f2; }
+      body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,sans-serif; }
+      main { max-width:760px; margin:0 auto; padding:2rem 16px 4rem; }
+      .crumb,.meta,.stamp { color:var(--muted); font-size:.85rem; } .crumb { font-family:ui-monospace,monospace; }
+      h1 { margin:.25rem 0 .5rem; line-height:1.2; } .meta { display:flex; gap:1rem; flex-wrap:wrap; }
+      .status { border:1px solid var(--line); border-radius:99px; padding:0 .6rem; }
+      .callout { background:var(--note); padding:.7rem 1rem; border-radius:6px; }
+      table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:.92rem; }
+      th,td { border-bottom:1px solid var(--line); padding:.35rem .5rem; text-align:left; }
+      footer { margin-top:3rem; padding-top:1rem; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="crumb">support desk · kb</div>
+      <h1>#4471 · two date failures</h1>
+      <p class="meta"><span>owner <b>hjmro</b></span><span class="status">proposed</span><span>reviewed 2026-10-29</span></p>
+      <p>Ticket #4471 merged <strong>412 unique reports</strong>, but its reports describe two independent date failures. Grouping uses the tenant's locale and booking form rather than the intake tag.</p>
+      <p class="callout">The existing parser ticket covers the larger group. The booking-v3 hint needs its own ticket.</p>
+      <h2>Problems found</h2>
+      <h3>Parser reads day-first dates as month-first</h3>
+      <p>The shared parser reads every date month first. In a day-first tenant, a date such as 4/7 is interpreted as 7 April instead of 4 July. This group contains <strong>379 reports</strong>.</p>
+      <h3>booking-v3 gives day-first tenants a month-first hint</h3>
+      <p>booking-v3 prints <code>MM/DD/YYYY</code>. Its users type dates in that order, while the tenant expects day-first input. This is a separate form-hint failure affecting <strong>33 reports</strong>.</p>
+      <h2>Evidence from #4471</h2>
+      <table><thead><tr><th>cause</th><th>reports</th><th>tenants</th><th>seen</th></tr></thead><tbody>
+        <tr><td><code>parser</code></td><td>379</td><td>11</td><td>2026-04-01 → 2026-10-04</td></tr>
+        <tr><td><code>hint</code></td><td>33</td><td>3</td><td>2026-04-17 → 2026-09-22</td></tr>
+      </tbody></table>
+      <p class="stamp">desk ref <b>DR-3EFF-8C8X</b></p>
+      <footer>Pages are written by people. Tables and charts are built from data at render time.</footer>
+    </main>
+  </body>
+</html>

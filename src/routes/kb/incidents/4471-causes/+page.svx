@@ -1,0 +1,39 @@
+---
+layout: runbook
+title: '#4471 · two date failures'
+owner: hjmro
+status: proposed
+reviewed: 2026-10-29
+signature: hjmro
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+Ticket #4471 merged **412 unique reports**, but its reports describe two independent date
+failures. Grouping uses the tenant's locale and booking form rather than the intake tag.
+
+<Callout>
+The existing parser ticket covers the larger group. The booking-v3 hint needs its own ticket.
+</Callout>
+
+## Problems found
+
+### Parser reads day-first dates as month-first
+
+The shared parser reads every date month first. In a day-first tenant, a date such as 4/7 is
+interpreted as 7 April instead of 4 July. This group contains **379 reports**.
+
+### booking-v3 gives day-first tenants a month-first hint
+
+booking-v3 prints `MM/DD/YYYY`. Its users type dates in that order, while the tenant expects
+day-first input. This is a separate form-hint failure affecting **33 reports**.
+
+## Evidence from #4471
+
+<CauseTable ticket={4471} />
+
+<RenderStamp {signature} />
