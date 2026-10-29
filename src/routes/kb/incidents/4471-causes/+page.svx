@@ -36,4 +36,9 @@ day-first input. This is a separate form-hint failure affecting **33 reports**.
 
 <CauseTable ticket={4471} />
 
+## Resolution
+
+Work on #4471 is complete. The two follow-up tickets close with this documented split, so the
+desk retains the evidence for both failures without keeping duplicate work open.
+
 <RenderStamp {signature} />
